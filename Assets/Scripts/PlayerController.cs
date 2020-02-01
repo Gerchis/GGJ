@@ -11,8 +11,9 @@ public class PlayerController : MonoBehaviour
 
     private Vector2 gravityDirection;
     private Vector3 moveDirection;
-    private Directions inputDirection = Directions.NONE; 
+    private Directions inputDirection = Directions.NONE;
 
+    private MerchantController npc;
     private enum Directions
     {
         NONE,
@@ -44,6 +45,7 @@ public class PlayerController : MonoBehaviour
         {
             inputDirection = Directions.NONE;
         }
+
     }
 
     private void FixedUpdate()
@@ -53,8 +55,6 @@ public class PlayerController : MonoBehaviour
         float distance = 50;
 
         rb.AddForce(-Physics2D.gravity*gravity*gravityDirection.normalized,ForceMode2D.Force);
-
-        //rb.velocity = Vector2.right * Input.GetAxis("Horizontal") * speed * delta;
 
         switch (inputDirection)
         {
@@ -74,5 +74,23 @@ public class PlayerController : MonoBehaviour
 
         rb.MovePosition(transform.position + moveDirection.normalized * speed * delta * movementIndex );
 
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            if (collision.gameObject.tag == "NPC")
+            {
+                npc = collision.GetComponent<MerchantController>();
+
+                if (!npc.bocadillo.gameObject.activeSelf)
+                {
+                    npc.bocadillo.gameObject.SetActive(true);
+                }
+
+                npc.Interaction();
+            }
+        }
     }
 }

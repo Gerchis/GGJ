@@ -7,18 +7,51 @@ public class SceneControlle : MonoBehaviour
     public Animator cameraAnim;
     public int day;
 
-    void Start()
+    public Phase actualPhase;
+
+    public GameObject[] events;
+    public int[] dayIndex;
+    private int eventCount = 0;
+
+    public enum Phase
     {
-        
+        DAY,NIGHT
     }
 
-    void Update()
+    public void Start()
     {
-        
+        for (int i = 0; i < events.Length; i++)
+        {
+            events[i].SetActive(false);
+        }
     }
 
     public void newDay()
     {
+        cameraAnim.SetTrigger("Change");
 
+        day++;
+
+        switch (actualPhase)
+        {
+            case Phase.DAY:
+                actualPhase = Phase.NIGHT;
+                break;
+            case Phase.NIGHT:
+                actualPhase = Phase.DAY;
+                break;
+            default:
+                break;
+        }
+
+        if (actualPhase == Phase.NIGHT)
+        {
+            for (int i = 0; i < dayIndex[(day-1)/2]; i++)
+            {
+                events[eventCount].SetActive(true);
+
+                eventCount++;
+            }
+        }        
     }
 }

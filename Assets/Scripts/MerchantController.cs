@@ -10,6 +10,7 @@ public class MerchantController : MonoBehaviour
     public Image bocadillo;
     public int[] timesSpoke;
     public float talkingTime;
+    public bool merchant;
 
     public SceneControlle scene;
 
@@ -55,11 +56,17 @@ public class MerchantController : MonoBehaviour
 
                 dialogueLine = 0;
 
-                dialogue -= timesSpoke[scene.day];
+                if (merchant)
+                {
+                    scene.newDay();
+                }
+                else
+                {
+                    dialogue -= timesSpoke[scene.day];
+                }
             }
     
         }
 
-        Debug.Log(dialogue);
     }
 }

@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     public Transform worldCenter;
     public Rigidbody2D rb;
     public float speed;
+    public SceneControlle scene;
 
     private Vector2 gravityDirection;
     private Vector3 moveDirection;
@@ -20,6 +21,8 @@ public class PlayerController : MonoBehaviour
         RIGHT,
         LEFT
     }
+
+    public SceneControlle.Phase playerPhase = SceneControlle.Phase.DAY;
 
     void Start()
     {
@@ -78,19 +81,22 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (scene.actualPhase == playerPhase)
         {
-            if (collision.gameObject.tag == "NPC")
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
             {
-                npc = collision.GetComponent<MerchantController>();
-
-                if (!npc.bocadillo.gameObject.activeSelf)
+                if (collision.gameObject.tag == "NPC")
                 {
-                    npc.bocadillo.gameObject.SetActive(true);
-                }
+                    npc = collision.GetComponent<MerchantController>();
 
-                npc.Interaction();
+                    if (!npc.bocadillo.gameObject.activeSelf)
+                    {
+                        npc.bocadillo.gameObject.SetActive(true);
+                    }
+
+                    npc.Interaction();
+                }
             }
-        }
+        }        
     }
 }

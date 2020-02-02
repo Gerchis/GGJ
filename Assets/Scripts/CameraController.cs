@@ -4,17 +4,21 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public Transform targetPlayer;
+    private Transform targetPlayer;
     public Transform playerDay;
     public Transform playerNight;
 
+    public Animator world;
+
     private bool kinematic = false;
+    private Animator anim;
 
     void Start()
     {
-        
-    }
+        anim = GetComponent<Animator>();
 
+        targetPlayer = playerDay;
+    }
 
     void LateUpdate()
     {
@@ -28,6 +32,13 @@ public class CameraController : MonoBehaviour
     public void startAnimation ()
     {
         kinematic = true;
+
+        targetPlayer = playerNight;
+    }
+
+    public void rotateWorld ()
+    {
+        world.SetTrigger("Rotate");
     }
 
     public void endAnimation ()

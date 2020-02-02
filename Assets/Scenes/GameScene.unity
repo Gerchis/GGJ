@@ -4866,6 +4866,10 @@ MonoBehaviour:
   cameraAnim: {fileID: 550654071}
   day: 0
   actualPhase: 0
+  defaultCursor: {fileID: 2800000, guid: 4bd4752a053737a4a8e1987a5ad70bb7, type: 3}
+  audios:
+  - {fileID: 0}
+  - {fileID: 0}
   events:
   - {fileID: 1136453970}
   - {fileID: 1634848796}
@@ -9673,6 +9677,10 @@ PrefabInstance:
       propertyPath: scene
       value: 
       objectReference: {fileID: 589621108}
+    - target: {fileID: 145890130, guid: ad9c97439fd15074c80baffa2312871c, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ad9c97439fd15074c80baffa2312871c, type: 3}
 --- !u!4 &1163992555 stripped

@@ -8,10 +8,13 @@ public class SceneControlle : MonoBehaviour
     public int day;
 
     public Phase actualPhase;
+    public Texture2D defaultCursor;
+    public AudioClip[] audios;
 
     public GameObject[] events;
     public int[] dayIndex;
     private int eventCount = 0;
+    private AudioSource source;
 
     public enum Phase
     {
@@ -24,6 +27,8 @@ public class SceneControlle : MonoBehaviour
         {
             events[i].SetActive(false);
         }
+
+        source = GetComponent<AudioSource>();
     }
 
     public void newDay()
@@ -32,13 +37,19 @@ public class SceneControlle : MonoBehaviour
 
         day++;
 
+        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
+
         switch (actualPhase)
         {
             case Phase.DAY:
                 actualPhase = Phase.NIGHT;
+
+                source.clip = audios[0];
                 break;
             case Phase.NIGHT:
                 actualPhase = Phase.DAY;
+
+                source.clip = audios[1];
 
                 for (int i = 0; i < events.Length; i++)
                 {

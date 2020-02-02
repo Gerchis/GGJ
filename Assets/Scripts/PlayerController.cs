@@ -10,11 +10,19 @@ public class PlayerController : MonoBehaviour
     public float speed;
     public SceneControlle scene;
 
+    public Texture2D defaultCursor;
+    public Texture2D interactCursor;
+
     private Vector2 gravityDirection;
     private Vector3 moveDirection;
     private Directions inputDirection = Directions.NONE;
+    private Animator anim;
+    private SpriteRenderer sprite;
+
+    private bool right = true;
 
     private MerchantController npc;
+
     private enum Directions
     {
         NONE,
@@ -27,6 +35,8 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
     }
 
     
@@ -36,17 +46,37 @@ public class PlayerController : MonoBehaviour
 
         moveDirection.Set(-gravityDirection.normalized.y, gravityDirection.normalized.x,0);
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
             inputDirection = Directions.LEFT;
+
+            anim.SetBool("Walk", true);
+
+            if (right)
+            {
+                sprite.flipX = true;
+
+                right = false;
+            }
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             inputDirection = Directions.RIGHT;
+
+            anim.SetBool("Walk", true);
+
+            if (!right)
+            {
+                sprite.flipX = false;
+
+                right = true;
+            }
         }
         else
         {
             inputDirection = Directions.NONE;
+
+            anim.SetBool("Walk", false);
         }
 
     }
@@ -98,5 +128,15 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }        
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Cursor.SetCursor(interactCursor, Vector2.zero, CursorMode.Auto);
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        Cursor.SetCursor(defaultCursor, Vector2.zero, CursorMode.Auto);
     }
 }

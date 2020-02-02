@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private bool right = true;
 
     private MerchantController npc;
+    private ApplleController aple;
 
     private enum Directions
     {
@@ -125,6 +126,13 @@ public class PlayerController : MonoBehaviour
                     }
 
                     npc.Interaction();
+                }
+                else if (collision.gameObject.tag == "Tree")
+                {
+                    aple = collision.GetComponent<ApplleController>();
+
+                    aple.Interaction();
+
                 }
             }
         }        

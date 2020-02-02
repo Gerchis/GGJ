@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 145890129}
   - component: {fileID: 145890130}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: spritePersonajeWalkSombra_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 190991722515676557}
   - component: {fileID: 190991722515676545}
   - component: {fileID: 1634563707}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -227,6 +227,8 @@ MonoBehaviour:
   rb: {fileID: 0}
   speed: 0.01
   scene: {fileID: 0}
+  defaultCursor: {fileID: 2800000, guid: 4bd4752a053737a4a8e1987a5ad70bb7, type: 3}
+  interactCursor: {fileID: 2800000, guid: 685ad92e9ad712c4a988f4ca7b692243, type: 3}
   playerPhase: 0
 --- !u!95 &1634563707
 Animator:

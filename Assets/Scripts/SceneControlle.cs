@@ -39,6 +39,11 @@ public class SceneControlle : MonoBehaviour
                 break;
             case Phase.NIGHT:
                 actualPhase = Phase.DAY;
+
+                for (int i = 0; i < events.Length; i++)
+                {
+                    events[i].SetActive(false);
+                }
                 break;
             default:
                 break;

@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
 
     private MerchantController npc;
     private ApplleController aple;
+    private StarController star;
 
     private enum Directions
     {
@@ -133,6 +134,12 @@ public class PlayerController : MonoBehaviour
 
                     aple.Interaction();
 
+                }
+                else if (collision.gameObject.tag == "Star")
+                {
+                    star = collision.GetComponent<StarController>();
+
+                    star.Interaction();
                 }
             }
         }        

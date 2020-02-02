@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MerchantController : MonoBehaviour
@@ -27,45 +28,88 @@ public class MerchantController : MonoBehaviour
     
     void Update()
     {
-        if (Time.time < actualTalkingTime)
+        if (anim)
         {
-            anim.SetBool("Talking",true);
-        }
-        else if (anim.GetBool("Talking"))
-        {
-            anim.SetBool("Talking", false);
-        }
+            if (Time.time < actualTalkingTime)
+            {
+                anim.SetBool("Talking", true);
+            }
+            else if (anim.GetBool("Talking"))
+            {
+                anim.SetBool("Talking", false);
+            }
+        }        
     }
 
     public void Interaction()
     {
-        if (dialogueLine < timesSpoke[scene.day])
+        if (scene.actualPhase == SceneControlle.Phase.DAY)
         {
-            texto.text = dialogues[dialogue];
+            if (dialogueLine < timesSpoke[scene.day / 2])
+            {
+                texto.text = dialogues[dialogue];
 
-            dialogueLine++;
-            dialogue++;
+                dialogueLine++;
+                dialogue++;
 
-            actualTalkingTime = Time.time + talkingTime;
+                actualTalkingTime = Time.time + talkingTime;
+            }
+            else
+            {
+                if (bocadillo.gameObject.activeSelf)
+                {
+                    bocadillo.gameObject.SetActive(false);
+
+
+                    if (dialogue >= dialogues.Length)
+                    {
+                        SceneManager.LoadScene("MenuScene");
+                    }
+
+                    dialogueLine = 0;
+
+                    if (merchant)
+                    {
+                        scene.newDay();
+                    }
+                    else
+                    {
+                        dialogue -= timesSpoke[scene.day / 2];
+                    }
+                }
+            }
+
         }
         else
         {
-            if (bocadillo.gameObject.activeSelf)
+            if (dialogueLine < timesSpoke[(scene.day-1) / 2])
             {
-                bocadillo.gameObject.SetActive(false);
+                texto.text = dialogues[dialogue];
 
-                dialogueLine = 0;
+                dialogueLine++;
+                dialogue++;
 
-                if (merchant)
+                actualTalkingTime = Time.time + talkingTime;
+            }
+            else
+            {
+                if (bocadillo.gameObject.activeSelf)
                 {
-                    scene.newDay();
-                }
-                else
-                {
-                    dialogue -= timesSpoke[scene.day];
+                    bocadillo.gameObject.SetActive(false);
+
+
+                    dialogueLine = 0;
+
+                    if (merchant)
+                    {
+                        scene.newDay();
+                    }
+                    else
+                    {
+                        dialogue -= timesSpoke[(scene.day-1) / 2];
+                    }
                 }
             }
-    
         }
 
     }

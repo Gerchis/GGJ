@@ -33,7 +33,14 @@ public class CameraController : MonoBehaviour
     {
         kinematic = true;
 
-        targetPlayer = playerNight;
+        if (targetPlayer == playerNight)
+        {
+            targetPlayer = playerDay;
+        }
+        else
+        {
+            targetPlayer = playerNight;
+        }
     }
 
     public void rotateWorld ()

@@ -12,6 +12,8 @@ public class ApplePickUp : MonoBehaviour
         if (collision.gameObject.tag == "Player")
         {
             scene.newDay();
+
+            Destroy(gameObject);
         }
     }
 }
